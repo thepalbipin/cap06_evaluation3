@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Masai Doctor Records</title>
+  </head>
+  <body>
+    <!-- Use this form for data input  -->
+    <form onsubmit="formData(event)">
+      <input placeholder="Name" type="text" id="name" />
+      <input placeholder="Doctor ID" type="text" id="doctorid" />
+      <select id="specialization">
+        <option value="">Select Specialization</option>
+        <option value="Dermatologist">Dermatologist</option>
+        <option value="Dentist">Dentist</option>
+        <option value="Gynecologist">Gynecologist</option>
+      </select>
+      <input placeholder="Experience" type="number" id="experience" />
+      <input placeholder="Email" type="email" id="email" />
+      <input placeholder="Mobile No." type="number" id="mobile" />
+      <input type="submit" value="Submit" />
+    </form>
+
+    <!-- Use this Select tag for filter part  -->
+    <select id="filter">
+      <option value="">Select Specialization</option>
+      <option value="Dermatologist">Dermatologist</option>
+      <option value="Dentist">Dentist</option>
+      <option value="Gynecologist">Gynecologist</option>
+    </select>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Doctor ID</th>
+          <th>Specialization</th>
+          <th>Experience in Years</th>
+          <th>Email</th>
+          <th>Mobile No</th>
+          <th>Role</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody id="dataTable">
+        <!-- Append Rows here using JS & DOM  -->
+      </tbody>
+    </table>
+  </body>
+  
+</html>
+
+<script>
+
+  
+
+  function formData(e){
+      e.preventDefault();
+      let arr
+      if(JSON.parse(localStorage.getItem("doctor"))==null){
+        arr=[]
+      }
+      else{
+        arr=JSON.parse(localStorage.getItem("doctor"))
+      }
+
+      let name = e.target.name.value;
+      let doctorid = e.target.doctorid.value;
+      let specialization = e.target.specialization.value;
+      let experience = e.target.experience.value;
+      let email = e.target.email.value;
+      let mobile = e.target.mobile.value;
+
+      // console.log(name,doctorid,specialization,experience,email,mobile)
+
+      let obj={
+          name,
+          doctorid,
+          specialization,
+          experience,
+          email,
+          mobile
+      }
+      arr.push(obj)
+
+      // console.log(arr);
+
+      localStorage.setItem("doctor",JSON.stringify(arr))
+
+      showdata(arr)
+      }
+
+      function showdata(arr){
+
+        let tbl = document.getElementById("dataTable")
+
+        arr.map((ele)=>
+        {
+          let row = document.createElement('tr');
+          let td1 = document.createElement('td');
+          let td2 = document.createElement('td');
+          let td3 = document.createElement('td');
+          let td4 = document.createElement('td');
+          let td5 = document.createElement('td');
+          let td6 = document.createElement('td');
+
+          td1.innerHTML = ele.name;
+          td2.innerHTML = ele.doctorid;
+          td3.innerHTML = ele.specialization;
+          td4.innerHTML = ele.experience;
+          td5.innerHTML = ele.email;
+          td6.innerHTML = ele.mobile;
+
+          // row.append(td1,td2,td3,td4,td4,td5,td6);
+          // tbody.append(row)
+        })
+      }
+</script>
